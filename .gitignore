@@ -1,0 +1,6 @@
+nginx/log/
+
+.DS_Store
+
+## PostgreSQL
+postgresql/data

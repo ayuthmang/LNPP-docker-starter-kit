@@ -1,0 +1,55 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.13.5
+    container_name: lnpp-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/site:/usr/share/nginx/html
+      - ./nginx/conf:/etc/nginx:ro
+      - ./nginx/log:/var/log/nginx
+    depends_on:
+      - phpfpm
+    networks:
+      lnpp-network:
+        ipv4_address: ${LNPP_NGINX_IP}
+
+  phpfpm:
+    image: blacksource/mta-php7-fpm
+    container_name: lnpp-phpfpm
+    # Uncomment lines below if you want to make php7-fpm be available outside the bridge
+    #ports:
+    # - "9000:9000"
+    volumes:
+      - ./php7fpm/conf/cli/php.ini:/etc/php/7.0/cli/php.ini
+      - ./php7fpm/conf/fpm/php.ini:/etc/php/7.0/fpm/php.ini
+      - ./php7fpm/conf/fpm/php-fpm.conf:/etc/php/7.0/cli/php-fpm.conf
+      - ./nginx/site:/usr/share/nginx/html
+    networks:
+      lnpp-network:
+        ipv4_address: ${LNPP_PHP7FPM}
+
+  postgresql:
+    image: postgres:9.3
+    container_name: lnpp-postgresql
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: asdf
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/conf:/etc/postgresql/
+    ports:
+      - "5432:5432"
+    networks:
+      lnpp-network:
+        ipv4_address: ${LNPP_POSTGRES_IP}
+
+networks:
+  lnpp-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${LNPP_SUBNET}
+          gateway: ${LNPP_GATEWAY}
