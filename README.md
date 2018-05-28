@@ -38,7 +38,17 @@ $ docker-compose down
 ### Overall structures
 
 ```
+├── nginx
+│   ├── conf    --- Nginx configuration folder
+│   ├── log     --- Nginx log folder
+│   └── site    --- Store our sites, php scripts
+├── php7fpm
+│   └── conf    --- Php fpm configuration file
+└── postgresql
+    ├── conf    --- PostgreSQL configuration folders
+    └── data    --- PostgreSQL storage folder
 ```
+
 ### Private IP Address 
 
 Private address which container talk to each others
