@@ -32,3 +32,28 @@ $ docker-compose stop
 ```
 $ docker-compose down
 ```
+
+## Structures
+
+### Overall structures
+
+```
+```
+### Private IP Address 
+
+Private address which container talk to each others
+
+
+(If you want to access with host just add uncomment in docker-compose.yml)
+
+
+(If you want to edit private ip address just go to .env file)
+
+```
+LNPP_GATEWAY=172.20.1.1
+LNPP_SUBNET=172.20.1.0/16
+
+LNPP_POSTGRES_IP=172.20.1.2
+LNPP_NGINX_IP=172.20.1.3
+LNPP_PHP7FPM=172.20.1.4
+```
